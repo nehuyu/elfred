@@ -1,4 +1,5 @@
 # Elfred
+Electron + Alfred
 
 ## Description
 
