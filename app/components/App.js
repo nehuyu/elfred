@@ -60,7 +60,9 @@ export default class App extends Component {
     let jsxs = this.getJsxs();
     return (
       <div className="page">
-        <input type="text" id="input" className={styles.searchInput}  ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
+        <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} /><div className={styles.top_icon}>
+          <img src="../icon.png" className={styles.top_img} alt="" />
+        </div>
         { jsxs }
       </div>
     );
