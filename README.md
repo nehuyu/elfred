@@ -26,7 +26,7 @@ Launch your Apllication very fast.
 ## Installation
 
 ```
-$ git clone https://bitbucket.org/electron-alfred/electron-alfred/
+$ git clone https://github.com/nehuyu/elfred
 $ npm install
 ```
 
