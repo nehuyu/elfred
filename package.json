@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "0.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "Elfred",
+  "productName": "Elfred",
+  "version": "0.0.1",
+  "description": "An Alfred-like application written in JavaScript. Launch your Apllication very fast.",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
@@ -26,11 +26,11 @@
   },
   "repository": {	
     "type": "git",
-    "url": "git+https://masaumamichi@bitbucket.org/electron-alfred/electron-alfred.git"
+    "url": "git+https://github.com/nehuyu/elfred.git"
   },
   "author": {
-    "name": "",
-    "email": "",
+    "name": "nehuyu",
+    "email": "ne.huyu@gmail.com",
     "url": ""
   },
   "license": "MIT",
