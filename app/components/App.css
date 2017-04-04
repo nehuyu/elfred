@@ -25,9 +25,12 @@
 
 
 .searchInput{
-  width:100%;
-  font-size:50px;
+  //float: left;
+  display: inline-block;
+  width: 90%;
+  font-size: 50px;
   margin: 0;
+  border: none;
   outline: 0;
   box-sizing: border-box;
   padding: 0px 10px;
