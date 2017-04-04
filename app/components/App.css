@@ -1,0 +1,38 @@
+.page {
+  height: 100%;
+  width: 100%;
+}
+
+.list-group-item{
+  padding: 10px;
+  font-size:32px;
+  border-top: 1px solid #ddd;
+  color: #414142;
+  background:#f5f5f4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-group-item.selected{
+  color: #fff;
+  background-color: #116cd6;
+}
+.list-group-item:first-child {
+  border-top: 0;
+}
+
+
+
+.searchInput{
+  width:100%;
+  font-size:50px;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+  padding: 0px 10px;
+}
+
+.searchInput:focus {
+  outline: 0;
+}

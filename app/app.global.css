@@ -1,0 +1,11 @@
+body {
+  background-color: transparent;
+  font-family: "游ゴシック", YuGothic,sans-serif, Arial, Helvetica, Helvetica Neue;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+
