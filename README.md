@@ -1,5 +1,4 @@
-# App-name
-Elfred
+# Elfred
 
 ## Description
 
