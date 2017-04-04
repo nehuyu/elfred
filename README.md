@@ -8,7 +8,7 @@ Launch your Apllication very fast.
 
 ***DEMO:***
 
-![Demo](https://image-url.gif)
+![Demo](https://github.com/nehuyu/elfred/blob/master/demo.gif)
 
 ## Features
 
