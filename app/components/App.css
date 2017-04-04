@@ -51,11 +51,3 @@
   height: 100%;
 }
 
-.top_icon:after {
-    content: "";
-    clear: both;
-    height: 0;
-    display: block;
-    visibility: hidden;
-}
-
