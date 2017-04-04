@@ -36,3 +36,26 @@
 .searchInput:focus {
   outline: 0;
 }
+
+.top_icon{
+  //float: left;
+  display: inline-block;
+  width: 10%;
+  height: 57px;
+  background-color: white;
+}
+.top_icon img{
+  //float: right;
+  //display: inline-block;
+  margin-right: 5px;
+  height: 100%;
+}
+
+.top_icon:after {
+    content: "";
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
+}
+
