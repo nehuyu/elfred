@@ -24,7 +24,7 @@
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
-  "repository": {	
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/nehuyu/elfred.git"
   },
@@ -130,7 +130,7 @@
     "request": "^2.74.0",
     "rimraf": "^2.5.4",
     "source-map-support": "^0.4.2",
-    "xml2js": "^0.4.17"
+    "xml2js": "https://registry.npmjs.org/xml2js/-/xml2js-0.4.17.tgz"
   },
   "devEngines": {
     "node": "6.9.4",

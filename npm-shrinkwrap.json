@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "0.0.0",
+  "name": "Elfred",
+  "version": "0.0.1",
   "dependencies": {
     "7zip": {
       "version": "0.0.6",
