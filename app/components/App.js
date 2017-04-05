@@ -154,4 +154,18 @@ export default class App extends Component {
     });
     return jsxs;
   }
+
+  pathToIcon(path) {
+    const plist = fs.readFileSync(path + '/contents/info.plist', 'utf-8');
+    
+    let iconPath; 
+    plist.toString().split('\n').forEach(function (line, i, a) {
+      if (line.indexOf('<key>CFBundleIconFile</key>') !== -1) {
+        const match = a[i + 1];  
+        const string = match.replace(/<string>|<\/string>|\s/g, '');
+        iconPath = (path + '/contents/resources/' + string + '.icns');
+      }
+    });
+    return iconPath;
+  }
 }
