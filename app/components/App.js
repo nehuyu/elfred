@@ -30,7 +30,7 @@ export default class App extends Component {
   }
 
   render() {
-    let jsxs = this.getJsxs();
+    let jsxs = this.getResultsJsxs();
     return (
       <div className="page">
         <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
@@ -146,7 +146,7 @@ export default class App extends Component {
     return appList;   
   }
 
-  getJsxs() {
+  getResultsJsxs() {
     let results = this.state.results;
     let jsxs = results.map((result, i) => {
       let selectFlg = '';
