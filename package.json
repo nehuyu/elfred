@@ -24,7 +24,7 @@
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
-  "repository": {	
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/nehuyu/elfred.git"
   },
@@ -111,6 +111,7 @@
     "electron-debug": "^1.0.1",
     "express": "^4.14.0",
     "howler": "^2.0.0",
+    "iconutil": "^1.0.2",
     "jquery": "https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz",
     "lodash": "^4.15.0",
     "moment": "^2.17.1",
@@ -129,8 +130,7 @@
     "redux-thunk": "^2.1.0",
     "request": "^2.74.0",
     "rimraf": "^2.5.4",
-    "source-map-support": "^0.4.2",
-    "xml2js": "^0.4.17"
+    "source-map-support": "^0.4.2"
   },
   "devEngines": {
     "node": "6.9.4",

@@ -6,9 +6,47 @@ import styles from './App.css';
 import { C, LIST } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
 
+const iconutil = require('iconutil');
+
 export default class App extends Component {
   
- // メインウインドウの開閉を受信
+  constructor(props) {
+    super(props);
+    this.state = {
+      allFiles: [],
+      results: [],
+      input: '',
+      selectedIndex: 0
+    };
+  }
+  
+  componentWillMount() {
+    let appList = this.getApplicationList();
+    this.setState({
+      allFiles: appList
+    });
+    // ipc通信につなぐ
+    this.ipcInit();
+  }
+
+  render() {
+    let jsxs = this.getResultsJsxs();
+    return (
+      <div className="page">
+        <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
+        <div className={styles.top_icon}>
+          <img src="../icon.png" className={styles.top_img} alt=""/>
+        </div>
+        { jsxs }
+      </div>
+    );
+  }
+
+  componentDidMount() {
+    this.getAppIcons();
+  }
+
+   // メインウインドウの開閉を受信
   ipcInit() {
     ipcRenderer.on('mainWindowHide', () => {
       this.setState({
@@ -44,37 +82,6 @@ export default class App extends Component {
       input: inputVal,
       selectedIndex: 0
     }); 
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      allFiles: [],
-      results: [],
-      input: '',
-      selectedIndex: 0
-    };
-  }
-
-  render() {
-    let jsxs = this.getJsxs();
-    return (
-      <div className="page">
-        <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} /><div className={styles.top_icon}>
-          <img src="../icon.png" className={styles.top_img} alt="" />
-        </div>
-        { jsxs }
-      </div>
-    );
-  }
-
-  componentWillMount() {
-    let appList = this.getApplicationList();
-    this.setState({
-      allFiles: appList
-    });
-    // ipc通信につなぐ
-    this.ipcInit();
   }
 
   onKeyDown(e) {
@@ -125,22 +132,21 @@ export default class App extends Component {
     const path = this.state.results[i].path;
     shell.openItem(path);
   }
-  
+
+
+  // componentWillMountにresult stateの初期値となるリストを返す
   getApplicationList() {
-    const path = '/Applications';
-    const files = fs.readdirSync(path).filter((file) => {
-      // '.app' で終わるファイルのみ
+    const appDir = '/Applications/';
+    const appList = fs.readdirSync(appDir).filter((file) => {
+      // '.app' で終わるファイルのみreturn
       return file.slice(-4) === '.app';
-    }).map((file) => {
-      return file.slice(0, -4);
-    });
-    let appList = files.map((file) => {
-      return { name: file, path: path + '/' + file + '.app' };
+    }).map((appName) => {
+      return { name: appName.slice(0, -4), path: appDir + appName, icon: '../icon_default.png' };
     });
     return appList;   
   }
 
-  getJsxs() {
+  getResultsJsxs() {
     let results = this.state.results;
     let jsxs = results.map((result, i) => {
       let selectFlg = '';
@@ -149,9 +155,48 @@ export default class App extends Component {
       const listClassName = styles['list-group-item'] + selectedClassName;
 
       return (
-        <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} >{ result.name }</div>
+        <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} ><img src={result.icon} className={styles.appIcon} />{ result.name }</div>
       );
     });
     return jsxs;
+  }
+
+  getAppIcons() {
+    this.state.allFiles.forEach((result) => {
+      this.iconToBase64(this.pathToIcon(result.path), result.name);
+    });
+  }
+
+  // アプリのpathを渡されたらそのアイコンへのpathを返す関数
+  pathToIcon(path) {
+    const plist = fs.readFileSync(path + '/contents/info.plist', 'utf-8');
+    
+    let iconPath; 
+    plist.toString().split('\n').forEach((line, i, a) => {
+      if (line.indexOf('<key>CFBundleIconFile</key>') !== -1) {
+        const match = a[i + 1];  
+        const string = match.replace(/<string>|<\/string>|\s|\.icns/g, '');
+        iconPath = (path + '/contents/resources/' + string + '.icns');
+      }
+    });
+    return iconPath;
+  }
+  
+  // icnファイルをbase64にデコードし、終わったらstateに書き込む
+  iconToBase64(icns, appName) {
+    const base64 = iconutil.toIconset(icns, (err, icons) => {
+      const base64 = icons['icon_128x128.png'].toString('base64');
+      // allFIlesの該当アプリiconを書き換えたコピーを用意
+      const allFiles = this.state.allFiles.map((e) => {
+        if (e.name === appName) {    
+          e.icon = 'data:image/png;base64,' + base64;
+        }
+        return e;
+      });
+      //コピーでstate書き換え
+      this.setState({
+        allFiles
+      });
+    });
   }
 }
