@@ -178,4 +178,23 @@ export default class App extends Component {
     });
     return iconPath;
   }
+  
+  // icnファイルをbase64にデコードし、終わったらstateに書き込む
+  iconToBase64(icns, appName) {
+    console.log(icns);
+    const base64 = iconutil.toIconset(icns, (err, icons) => {
+      const base64 = icons['icon_128x128.png'].toString('base64');
+      // allFIlesの該当アプリiconを書き換えたコピーを用意
+      const allFiles = this.state.allFiles.map((e) => {
+        if (e.name === appName) {    
+          e.icon = 'data:image/png;base64,' + base64;
+        }
+        return e;
+      });
+      //コピーでstate書き換え
+      this.setState({
+        allFiles
+      });
+    });
+  }
 }
