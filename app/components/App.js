@@ -165,6 +165,7 @@ export default class App extends Component {
       if (line.indexOf('<key>CFBundleIconFile</key>') !== -1) {
         const match = a[i + 1];  
         const string = match.replace(/<string>|<\/string>|\s/g, '');
+        const string = match.replace(/<string>|<\/string>|\s|\.icns/g, '');
         iconPath = (path + '/contents/resources/' + string + '.icns');
       }
     });
