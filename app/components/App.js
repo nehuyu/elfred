@@ -152,6 +152,7 @@ export default class App extends Component {
 
       return (
         <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} >{ result.name }</div>
+        <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} ><img src={result.icon} className={styles.appIcon} />{ result.name }</div>
       );
     });
     return jsxs;
