@@ -2,7 +2,6 @@ import electron, { app, BrowserWindow, Menu, shell, crashReporter, ipcMain, Tray
 
 import rmdir from 'rimraf';
 import { LIST, INPUT } from './app/common/constants';
-import fs from 'fs';
 
 const path = require('path');
 
@@ -13,7 +12,6 @@ let tray = null;
 
 app.dock.hide();
 
-const plist = fs.readFileSync('/Applications/safari.app/contents/info.plist', 'utf-8');
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')();  // eslint-disable-line global-require
 }
