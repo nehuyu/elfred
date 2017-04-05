@@ -142,6 +142,7 @@ export default class App extends Component {
       return file.slice(-4) === '.app';
     }).map((appName) => {
       return { name: appName.slice(0, -4), path: appDir + appName, icon: '../icon_default.png' };
+      return { name: appName.slice(0, -4), path: appDir + appName, icon: '../icon_default.png', type: 'app' };
     });
     return appList;   
   }
