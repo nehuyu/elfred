@@ -10,7 +10,43 @@ const iconutil = require('iconutil');
 
 export default class App extends Component {
   
- // メインウインドウの開閉を受信
+  constructor(props) {
+    super(props);
+    this.state = {
+      allFiles: [],
+      results: [],
+      input: '',
+      selectedIndex: 0
+    };
+  }
+  
+  componentWillMount() {
+    let appList = this.getApplicationList();
+    this.setState({
+      allFiles: appList
+    });
+    // ipc通信につなぐ
+    this.ipcInit();
+  }
+
+  render() {
+    let jsxs = this.getJsxs();
+    return (
+      <div className="page">
+        <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
+        <div className={styles.top_icon}>
+          <img src="../icon.png" className={styles.top_img} alt=""/>
+        </div>
+        { jsxs }
+      </div>
+    );
+  }
+
+  componentDidMount() {
+    this.getAppIcons();
+  }
+
+   // メインウインドウの開閉を受信
   ipcInit() {
     ipcRenderer.on('mainWindowHide', () => {
       this.setState({
@@ -48,39 +84,6 @@ export default class App extends Component {
     }); 
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      allFiles: [],
-      results: [],
-      input: '',
-      selectedIndex: 0
-    };
-  }
-
-  render() {
-    let jsxs = this.getJsxs();
-    return (
-      <div className="page">
-        <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} /><div className={styles.top_icon}>
-          <img src="../icon.png" className={styles.top_img} alt="" />
-        </div>
-        { jsxs }
-      </div>
-    );
-  }
-
-  componentWillMount() {
-    let appList = this.getApplicationList();
-    this.setState({
-      allFiles: appList
-    });
-    // ipc通信につなぐ
-    this.ipcInit();
-  }
-  componentDidMount() {
-    this.getAppIcons();
-  }
   onKeyDown(e) {
     let selectedIndex = this.state.selectedIndex;
 
