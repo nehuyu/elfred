@@ -132,17 +132,16 @@ export default class App extends Component {
     const path = this.state.results[i].path;
     shell.openItem(path);
   }
-  
+
+
+  // componentWillMountにresult stateの初期値となるリストを返す
   getApplicationList() {
-    const path = '/Applications';
-    const files = fs.readdirSync(path).filter((file) => {
-      // '.app' で終わるファイルのみ
+    const appDir = '/Applications/';
+    const appList = fs.readdirSync(appDir).filter((file) => {
+      // '.app' で終わるファイルのみreturn
       return file.slice(-4) === '.app';
-    }).map((file) => {
-      return file.slice(0, -4);
-    });
-    let appList = files.map((file) => {
-      return { name: file, path: path + '/' + file + '.app', icon: '../icon_default.png' };
+    }).map((appName) => {
+      return { name: appName.slice(0, -4), path: appDir + appName, icon: '../icon_default.png' };
     });
     return appList;   
   }
@@ -185,7 +184,6 @@ export default class App extends Component {
   
   // icnファイルをbase64にデコードし、終わったらstateに書き込む
   iconToBase64(icns, appName) {
-    console.log(icns);
     const base64 = iconutil.toIconset(icns, (err, icons) => {
       const base64 = icons['icon_128x128.png'].toString('base64');
       // allFIlesの該当アプリiconを書き換えたコピーを用意
