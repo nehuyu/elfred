@@ -5,7 +5,7 @@ const Constants = {
   },
   LIST: {
     WIDTH: 700,
-    HEIGHT: 58,
+    HEIGHT: 63,
     LENGTH: 7
   }
 };
