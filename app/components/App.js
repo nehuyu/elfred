@@ -69,7 +69,7 @@ export default class App extends Component {
       results = this.state.allFiles.filter((file) => {
         // すべて小文字にしてから包含を判定
         return (file.name.toLowerCase().indexOf(inputVal.toLowerCase()) !== -1);
-      }).slice(0, LIST.LENGTH);
+      }).slice(0, LIST.LENGTH - 1);
 
       // web検索追加
       results.push({ name: 'www search...', path: 'https://www.google.co.jp/search?q=hoge', icon: '../icon_search.png', type: 'search' });
