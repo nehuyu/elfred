@@ -75,23 +75,6 @@ app.on('ready', () => {
   tray = new Tray(iconPath);
   let contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Item1',
-      type: 'radio',
-      icon: iconPath
-    },
-    {
-      label: 'Item2',
-      submenu: [
-        { label: 'subMenu1' },
-        { label: 'subMenu2' }
-      ]
-    },
-    {
-      lebel: 'fuga',
-      type: 'radio',
-      checked: true
-    },
-    {
       label: 'Quit',
       accelerater: 'Command+Q',
       selector: 'terminate:'
