@@ -138,6 +138,7 @@ export default class App extends Component {
     });
     let appList = files.map((file) => {
       return { name: file, path: path + '/' + file + '.app' };
+      return { name: file, path: path + '/' + file + '.app', icon: '../icon_default.png' };
     });
     return appList;   
   }
