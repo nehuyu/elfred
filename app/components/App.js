@@ -137,7 +137,6 @@ export default class App extends Component {
       return file.slice(0, -4);
     });
     let appList = files.map((file) => {
-      return { name: file, path: path + '/' + file + '.app' };
       return { name: file, path: path + '/' + file + '.app', icon: '../icon_default.png' };
     });
     return appList;   
@@ -152,13 +151,19 @@ export default class App extends Component {
       const listClassName = styles['list-group-item'] + selectedClassName;
 
       return (
-        <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} >{ result.name }</div>
         <div className={listClassName} key={i} onClick={this.onClick.bind(this, i)} onMouseOver={this.onMouseOver.bind(this, i)} ><img src={result.icon} className={styles.appIcon} />{ result.name }</div>
       );
     });
     return jsxs;
   }
 
+  getAppIcons() {
+    this.state.allFiles.forEach((result) => {
+      this.iconToBase64(this.pathToIcon(result.path), result.name);
+    });
+  }
+
+  // アプリのpathを渡されたらそのアイコンへのpathを返す関数
   pathToIcon(path) {
     const plist = fs.readFileSync(path + '/contents/info.plist', 'utf-8');
     
