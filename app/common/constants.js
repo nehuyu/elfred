@@ -7,7 +7,8 @@ const Constants = {
     WIDTH: 700,
     HEIGHT: 63,
     LENGTH: 7
-  }
+  },
+  SEARCH_URL: 'https://www.google.co.jp/search?q='
 };
 
 // console.log('Constants: ', Constants);
