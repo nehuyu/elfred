@@ -12,6 +12,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: center;
 }
 
 .list-group-item.selected{
@@ -51,3 +52,7 @@
   height: 100%;
 }
 
+.appIcon{
+  height: 36px;
+  margin-right: 10px; 
+}
