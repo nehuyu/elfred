@@ -115,15 +115,28 @@ export default class App extends Component {
       // エンターキー
       case 13:
         if (this.state.results.length !== 0) {
-          const path = this.state.results[this.state.selectedIndex].path;
-          shell.openItem(path);  
+          const item = this.state.results[this.state.selectedIndex];
+          this.launch(item);
         }
         break;
       default:
         break;
     }
   }
-
+  
+  launch(item) {
+    switch(item.type){ 
+      
+      case 'app':
+        shell.openItem(item.path);
+        break;
+      case 'search':
+        shell.openExternal(item.path);
+        break;
+      default:
+        break;
+    }
+  }
 
   onMouseOver(i, e) {
     this.setState({
@@ -132,8 +145,8 @@ export default class App extends Component {
   }
   
   onClick(i, e) {
-    const path = this.state.results[i].path;
-    shell.openItem(path);
+    const item = this.state.results[i];
+    this.launch(item);
   }
 
 
