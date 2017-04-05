@@ -3,7 +3,7 @@ import $ from 'jquery';
 import fs from 'fs';
 import ReactDOM, { render } from 'react-dom';
 import styles from './App.css';
-import { C, LIST } from '../common/constants';
+import { C, LIST, SEARCH_URL } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
 
 const iconutil = require('iconutil');
@@ -72,7 +72,7 @@ export default class App extends Component {
       }).slice(0, LIST.LENGTH - 1);
 
       // web検索追加
-      results.push({ name: 'www search...', path: 'https://www.google.co.jp/search?q=', icon: '../icon_search.png', type: 'search' });
+      results.push({ name: 'www search...', icon: '../icon_search.png', type: 'search' });
     } else {
       results = [];
     }
@@ -126,12 +126,11 @@ export default class App extends Component {
   
   launch(item) {
     switch(item.type){ 
-      
       case 'app':
-        shell.openItem(item.path);
+        shell.openItem(item.filePath);
         break;
       case 'search':
-        shell.openExternal(item.path + this.state.input);
+        shell.openExternal(SEARCH_URL + this.state.input);
         break;
       default:
         break;
@@ -157,7 +156,7 @@ export default class App extends Component {
       // '.app' で終わるファイルのみreturn
       return file.slice(-4) === '.app';
     }).map((appName) => {
-      return { name: appName.slice(0, -4), path: appDir + appName, icon: '../icon_default.png', type: 'app' };
+      return { name: appName.slice(0, -4), filePath: appDir + appName, icon: '../icon_default.png', type: 'app' };
     });
     return appList;   
   }
@@ -179,20 +178,20 @@ export default class App extends Component {
 
   getAppIcons() {
     this.state.allFiles.forEach((result) => {
-      this.iconToBase64(this.pathToIcon(result.path), result.name);
+      this.iconToBase64(this.pathToIcon(result.filePath), result.name);
     });
   }
 
   // アプリのpathを渡されたらそのアイコンへのpathを返す関数
-  pathToIcon(path) {
-    const plist = fs.readFileSync(path + '/contents/info.plist', 'utf-8');
+  pathToIcon(filePath) {
+    const plist = fs.readFileSync(filePath + '/contents/info.plist', 'utf-8');
     
     let iconPath; 
     plist.toString().split('\n').forEach((line, i, a) => {
       if (line.indexOf('<key>CFBundleIconFile</key>') !== -1) {
         const match = a[i + 1];  
         const string = match.replace(/<string>|<\/string>|\s|\.icns/g, '');
-        iconPath = (path + '/contents/resources/' + string + '.icns');
+        iconPath = (filePath + '/contents/resources/' + string + '.icns');
       }
     });
     return iconPath;
