@@ -1,7 +1,7 @@
 const Constants = {
   INPUT: {
     WIDTH: 700,
-    HEIGHT: 63
+    HEIGHT: 57
   },
   LIST: {
     WIDTH: 700,
