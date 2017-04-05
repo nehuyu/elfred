@@ -27,8 +27,7 @@
 
 
 .searchInput{
-  vertical-align: top;
-  display: inline-block;
+  float: left;
   width: 90%;
   font-size: 50px;
   margin: 0;
@@ -43,7 +42,7 @@
 }
 
 .top_icon{
-  display: inline-block;
+  float: left;
   width: 10%;
   height: 57px;
   background-color: white;
@@ -52,6 +51,13 @@
   opacity: 0;
   margin-right: 5px;
   height: 100%;
+}
+.top_img:after {
+    content: "";
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
 }
 
 .appIcon{

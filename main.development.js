@@ -21,8 +21,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-  
-  //ウインドウの位置を揃える処理
+  // ウインドウの位置を揃える処理
   const screenElectron = electron.screen;
   const mainScreen = screenElectron.getPrimaryDisplay();
   const screenSize = mainScreen.size;
@@ -74,23 +73,6 @@ app.on('ready', () => {
   
   tray = new Tray(iconPath);
   let contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Item1',
-      type: 'radio',
-      icon: iconPath
-    },
-    {
-      label: 'Item2',
-      submenu: [
-        { label: 'subMenu1' },
-        { label: 'subMenu2' }
-      ]
-    },
-    {
-      lebel: 'fuga',
-      type: 'radio',
-      checked: true
-    },
     {
       label: 'Quit',
       accelerater: 'Command+Q',
