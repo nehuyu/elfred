@@ -6,6 +6,7 @@ import styles from './App.css';
 import { C, LIST } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
 
+const iconutil = require('iconutil');
 export default class App extends Component {
   
  // メインウインドウの開閉を受信
