@@ -72,7 +72,7 @@ export default class App extends Component {
       }).slice(0, LIST.LENGTH - 1);
 
       // web検索追加
-      results.push({ name: 'www search...', path: 'https://www.google.co.jp/search?q=hoge', icon: '../icon_search.png', type: 'search' });
+      results.push({ name: 'www search...', path: 'https://www.google.co.jp/search?q=', icon: '../icon_search.png', type: 'search' });
     } else {
       results = [];
     }
@@ -131,7 +131,7 @@ export default class App extends Component {
         shell.openItem(item.path);
         break;
       case 'search':
-        shell.openExternal(item.path);
+        shell.openExternal(item.path + this.state.input);
         break;
       default:
         break;
