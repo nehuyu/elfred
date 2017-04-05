@@ -79,6 +79,9 @@ export default class App extends Component {
     this.ipcInit();
   }
 
+  componentDidMount() {
+    this.getAppIcons();
+  }
   onKeyDown(e) {
     let selectedIndex = this.state.selectedIndex;
 
