@@ -38,7 +38,7 @@ app.on('ready', () => {
     transparent: true,
     show: false,
     frame: false,
-    resizable: true
+    resizable: false
   });
 
   mainWindow.loadURL(`file://${__dirname}/app/app.html`);
