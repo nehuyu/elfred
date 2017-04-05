@@ -130,8 +130,7 @@
     "redux-thunk": "^2.1.0",
     "request": "^2.74.0",
     "rimraf": "^2.5.4",
-    "source-map-support": "^0.4.2",
-    "xml2js": "https://registry.npmjs.org/xml2js/-/xml2js-0.4.17.tgz"
+    "source-map-support": "^0.4.2"
   },
   "devEngines": {
     "node": "6.9.4",
