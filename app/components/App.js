@@ -70,6 +70,9 @@ export default class App extends Component {
         // すべて小文字にしてから包含を判定
         return (file.name.toLowerCase().indexOf(inputVal.toLowerCase()) !== -1);
       }).slice(0, LIST.LENGTH);
+
+      // web検索追加
+      results.push({ name: 'www search...', path: 'https://www.google.co.jp/search?q=hoge', icon: '../icon_search.png', type: 'search' });
     } else {
       results = [];
     }
