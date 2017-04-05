@@ -21,8 +21,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-  
-  //ウインドウの位置を揃える処理
+  // ウインドウの位置を揃える処理
   const screenElectron = electron.screen;
   const mainScreen = screenElectron.getPrimaryDisplay();
   const screenSize = mainScreen.size;
