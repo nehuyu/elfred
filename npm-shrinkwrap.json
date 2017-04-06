@@ -8681,6 +8681,11 @@
         }
       }
     },
+    "tinycolor2": {
+      "version": "1.4.1",
+      "from": "tinycolor2@latest",
+      "resolved": "https://registry.npmjs.org/tinycolor2/-/tinycolor2-1.4.1.tgz"
+    },
     "tmp": {
       "version": "0.0.28",
       "from": "tmp@0.0.28",
