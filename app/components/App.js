@@ -166,6 +166,9 @@ export default class App extends Component {
     }).map((appName) => {
       return { name: appName.slice(0, -4), filePath: appDir + appName, icon: '../icon_default.png', type: 'app' };
     });
+
+    // hue commandを追加
+    appList.push({ name: 'hue -on/off', icon: '../icon_default.png', type: 'hue' });
     return appList;   
   }
 
