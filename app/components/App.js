@@ -3,7 +3,7 @@ import $ from 'jquery';
 import fs from 'fs';
 import ReactDOM, { render } from 'react-dom';
 import styles from './App.css';
-import { C, LIST, SEARCH_URL } from '../common/constants';
+import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
 
 const iconutil = require('iconutil');
@@ -12,11 +12,16 @@ export default class App extends Component {
   
   constructor(props) {
     super(props);
+
+    //hueの初期状態を取得
+    this.getHueState();
+    
     this.state = {
       allFiles: [],
       results: [],
       input: '',
-      selectedIndex: 0
+      selectedIndex: 0,
+      huePower: false
     };
   }
   
@@ -132,6 +137,8 @@ export default class App extends Component {
       case 'search':
         shell.openExternal(SEARCH_URL + this.state.input);
         break;
+      case 'hue':   
+        this.hueControl(item);
       default:
         break;
     }
@@ -151,6 +158,7 @@ export default class App extends Component {
 
   // componentWillMountにresult stateの初期値となるリストを返す
   getApplicationList() {
+    // Application を追加
     const appDir = '/Applications/';
     const appList = fs.readdirSync(appDir).filter((file) => {
       // '.app' で終わるファイルのみreturn
@@ -158,6 +166,9 @@ export default class App extends Component {
     }).map((appName) => {
       return { name: appName.slice(0, -4), filePath: appDir + appName, icon: '../icon_default.png', type: 'app' };
     });
+
+    // hue commandを追加
+    appList.push({ name: 'hue -on/off', icon: '../icon_default.png', type: 'hue' });
     return appList;   
   }
 
@@ -178,7 +189,10 @@ export default class App extends Component {
 
   getAppIcons() {
     this.state.allFiles.forEach((result) => {
-      this.iconToBase64(this.pathToIcon(result.filePath), result.name);
+      // アイコン取得はappの時だけ
+      if (result.type === 'app') {
+        this.iconToBase64(this.pathToIcon(result.filePath), result.name);
+      }
     });
   }
 
@@ -212,6 +226,42 @@ export default class App extends Component {
       this.setState({
         allFiles
       });
+    });
+  }
+  hueControl(item) {
+    switch(item.name) {
+      // on/off切り替え
+      case 'hue -on/off':
+        this.sendHue({ on: !this.state.huePower });
+        this.setState({
+          huePower: !this.state.huePower
+        });
+        break;
+      default:
+        break;
+    }
+  }
+  
+  // hueと通信してstateを更新
+  getHueState() {
+    const url = 'http://' + HUE.IP + '/api/' + HUE.USER;
+    $.get(url, false, (e) => {
+      this.setState({
+        huePower: e.lights[HUE.ID].state.on
+      });
+    });
+  }
+  sendHue(data) {
+    const dataJson = JSON.stringify(data);
+    const url = 'http://' + HUE.IP + '/api/' + HUE.USER + '/lights/' + HUE.ID + '/state'; 
+    $.ajax({
+      'url': url,
+      'data': dataJson,
+      'success': (e) => {}, 
+      'type': 'PUT',
+      'cache': false,
+      'error': (e) => {},
+      'dataType': 'json'
     });
   }
 }
