@@ -3,7 +3,7 @@ import $ from 'jquery';
 import fs from 'fs';
 import ReactDOM, { render } from 'react-dom';
 import styles from './App.css';
-import { C, LIST, SEARCH_URL } from '../common/constants';
+import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
 
 const iconutil = require('iconutil');
@@ -219,6 +219,7 @@ export default class App extends Component {
     const dataJson = JSON.stringify(data);
     const url = 'http://192.168.10.134/api/LMGKsGB3DEoBlL4cLN3hVoYt0otICK83jQmBT5Vq/lights/5/state';
 
+    const url = 'http://' + HUE.IP + '/api/' + HUE.USER + '/lights/' + HUE.ID + '/state'; 
     $.ajax({
       'url': url,
       'data': dataJson,
