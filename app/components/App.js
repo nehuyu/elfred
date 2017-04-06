@@ -137,6 +137,8 @@ export default class App extends Component {
       case 'search':
         shell.openExternal(SEARCH_URL + this.state.input);
         break;
+      case 'hue':   
+        this.hueControl(item);
       default:
         break;
     }
