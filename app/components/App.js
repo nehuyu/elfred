@@ -85,7 +85,10 @@ export default class App extends Component {
       // カラーコード追加
       if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
 )) {
+        this.state.inputColor = inputVal;
         results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
+      }else{
+        this.state.inputColor = '#ffffff';
       }
 
       // web検索追加
