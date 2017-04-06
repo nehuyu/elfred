@@ -12,6 +12,10 @@ export default class App extends Component {
   
   constructor(props) {
     super(props);
+
+    //hueの初期状態を取得
+    this.getHueState();
+    
     this.state = {
       allFiles: [],
       results: [],
@@ -228,6 +232,16 @@ export default class App extends Component {
       default:
         break;
     }
+  }
+  
+  // hueと通信してstateを更新
+  getHueState() {
+    const url = 'http://' + HUE.IP + '/api/' + HUE.USER;
+    $.get(url, false, (e) => {
+      this.setState({
+        huePower: e.lights[HUE.ID].state.on
+      });
+    });
   }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
