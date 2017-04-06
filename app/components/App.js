@@ -214,4 +214,18 @@ export default class App extends Component {
       });
     });
   }
+  sendHue(data) {
+    const dataJson = JSON.stringify(data);
+    const url = 'http://192.168.10.134/api/LMGKsGB3DEoBlL4cLN3hVoYt0otICK83jQmBT5Vq/lights/5/state';
+
+    $.ajax({
+      'url': url,
+      'data': dataJson,
+      'success': (e) => { console.log(e); }, 
+      'type': 'PUT',
+      'cache': false,
+      'error': (e) => { console.log(e); },
+      'dataType': 'json'
+    });
+  }
 }
