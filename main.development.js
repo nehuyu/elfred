@@ -83,7 +83,7 @@ app.on('ready', () => {
   tray.setContextMenu(contextMenu);
 
    // if (process.env.NODE_ENV === 'development') {
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
   // } 
 
   // アプリケーションを quit する
