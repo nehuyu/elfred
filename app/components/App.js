@@ -189,7 +189,10 @@ export default class App extends Component {
 
   getAppIcons() {
     this.state.allFiles.forEach((result) => {
-      this.iconToBase64(this.pathToIcon(result.filePath), result.name);
+      // アイコン取得はappの時だけ
+      if (result.type === 'app') {
+        this.iconToBase64(this.pathToIcon(result.filePath), result.name);
+      }
     });
   }
 
