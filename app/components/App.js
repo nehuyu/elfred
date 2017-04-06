@@ -235,10 +235,10 @@ export default class App extends Component {
     $.ajax({
       'url': url,
       'data': dataJson,
-      'success': (e) => { console.log(e); }, 
+      'success': (e) => {}, 
       'type': 'PUT',
       'cache': false,
-      'error': (e) => { console.log(e); },
+      'error': (e) => {},
       'dataType': 'json'
     });
   }
