@@ -9,6 +9,7 @@ import { shell, ipcRenderer } from 'electron';
 const iconutil = require('iconutil');
 
 const tinycolor = require('tinycolor2');
+
 export default class App extends Component {
   
   constructor(props) {
@@ -37,10 +38,13 @@ export default class App extends Component {
 
   render() {
     let jsxs = this.getResultsJsxs();
+    const inputStyle = {
+      backgroundColor: this.state.inputColor
+    };
     return (
       <div className="page">
         <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
-        <div className={styles.top_icon}>
+        <div className={styles.top_icon} style={inputStyle}>
           <img src="../icon.png" className={styles.top_img} alt=""/>
         </div>
         { jsxs }
