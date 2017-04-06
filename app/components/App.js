@@ -8,6 +8,7 @@ import { shell, ipcRenderer } from 'electron';
 
 const iconutil = require('iconutil');
 
+const tinycolor = require('tinycolor2');
 export default class App extends Component {
   
   constructor(props) {
@@ -231,11 +232,15 @@ export default class App extends Component {
   hueControl(item) {
     switch(item.name) {
       // on/off切り替え
-      case 'hue -on/off':
+      case 'light -on/off':
         this.sendHue({ on: !this.state.huePower });
         this.setState({
           huePower: !this.state.huePower
         });
+        break;
+      case 'light - change color':
+        const hsv = tinycolor(this.state.input).toHsv();
+        this.sendHue({ hue: hsv.h * 182, sat: hsv.s * 254, bri: hsv.v * 254 });
         break;
       default:
         break;
