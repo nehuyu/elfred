@@ -27,7 +27,7 @@ app.on('ready', () => {
   const screenSize = mainScreen.size;
   
   // ウインドウの縦の最長の長さ
-  const maxHeight = INPUT.HEIGHT + LIST.HEIGHT * LIST.LENGTH;
+  const maxHeight = INPUT.HEIGHT + LIST.HEIGHT * LIST.APP_MAX_LENGTH;
   
   mainWindow = new BrowserWindow({
     width: INPUT.WIDTH,
