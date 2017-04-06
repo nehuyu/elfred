@@ -76,6 +76,12 @@ export default class App extends Component {
         // すべて小文字にしてから包含を判定
         return (file.name.toLowerCase().indexOf(inputVal.toLowerCase()) !== -1);
       }).slice(0, LIST.APP_MAX_LENGTH);
+      
+      // カラーコード追加
+      if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
+)) {
+        results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
+      }
 
       // web検索追加
       results.push({ name: 'www search...', icon: '../icon_search.png', type: 'search' });
