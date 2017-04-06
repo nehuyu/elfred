@@ -16,7 +16,8 @@ export default class App extends Component {
       allFiles: [],
       results: [],
       input: '',
-      selectedIndex: 0
+      selectedIndex: 0,
+      huePower: false
     };
   }
   
