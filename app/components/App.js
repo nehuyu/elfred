@@ -152,6 +152,7 @@ export default class App extends Component {
 
   // componentWillMountにresult stateの初期値となるリストを返す
   getApplicationList() {
+    // Application を追加
     const appDir = '/Applications/';
     const appList = fs.readdirSync(appDir).filter((file) => {
       // '.app' で終わるファイルのみreturn
