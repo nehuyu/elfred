@@ -216,6 +216,19 @@ export default class App extends Component {
       });
     });
   }
+  hueControl(item) {
+    switch(item.name) {
+      // on/off切り替え
+      case 'hue -on/off':
+        this.sendHue({ on: !this.state.huePower });
+        this.setState({
+          huePower: !this.state.huePower
+        });
+        break;
+      default:
+        break;
+    }
+  }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
     const url = 'http://192.168.10.134/api/LMGKsGB3DEoBlL4cLN3hVoYt0otICK83jQmBT5Vq/lights/5/state';
