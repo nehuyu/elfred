@@ -22,6 +22,7 @@ export default class App extends Component {
       allFiles: [],
       results: [],
       input: '',
+      inputColor: '#ffffff',
       selectedIndex: 0,
       huePower: false
     };
