@@ -175,7 +175,7 @@ export default class App extends Component {
     });
 
     // hue commandを追加
-    appList.push({ name: 'hue -on/off', icon: '../icon_default.png', type: 'hue' });
+    appList.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
     return appList;   
   }
 
