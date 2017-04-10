@@ -106,6 +106,10 @@ export default class App extends Component {
 
       // web検索追加
       results.push({ name: 'www search...', icon: '../icon_search.png', type: 'search' });
+      
+      //resultsの数を調整
+      results = results.slice(0, LIST.APP_MAX_LENGTH);
+    
     } else {
       results = [];
     }
