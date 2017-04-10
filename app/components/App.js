@@ -306,7 +306,6 @@ export default class App extends Component {
 
   // hueと通信してstateを更新
   getHueState() {
-    const url = 'http://' + HUE.IP + '/api/' + HUE.USER;
     const url = 'http://' + hueBridgeIp + '/api/' + hueUserName;
     $.get(url, false, (e) => {
       this.setState({
@@ -316,7 +315,6 @@ export default class App extends Component {
   }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
-    const url = 'http://' + HUE.IP + '/api/' + HUE.USER + '/lights/' + HUE.ID + '/state'; 
     const url = 'http://' + hueBridgeIp + '/api/' + hueUserName + '/lights/' + HUE.ID + '/state'; 
     $.ajax({
       'url': url,
