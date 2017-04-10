@@ -76,6 +76,10 @@ export default class App extends Component {
       const input = ReactDOM.findDOMNode(this.refs.input);
       input && input.focus();
     });
+
+    ipcRenderer.on('connectHue', () => {
+      this.connectHue();
+    });
   }
 
   filter(e) {
