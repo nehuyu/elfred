@@ -283,9 +283,11 @@ export default class App extends Component {
     .set('Accept', 'application/json')
     .end((err, res) => {
 
-      hueBridgeIp = res.body[0].internalipaddress;
+      this.setState({
+				hueBridgeIp: res.body[0].internalipaddress
+			});
       
-      const hueApiUrl = 'http://' + hueBridgeIp + '/api';
+      const hueApiUrl = 'http://' + this.state.hueBridgeIp + '/api';
       alert('hue bridgeのlink buttonを押して下さい');
       request
       .post(hueApiUrl)
@@ -294,7 +296,9 @@ export default class App extends Component {
       .end((err, res) => {
         // 接続に成功したら
         if (res) {  
-          hueUserName = res.body[0].success.username;
+					this.setState({
+						hueUserName: res.body[0].success.username
+					});
           alert('接続されました');
           this.getHueState();
           this.setState({
@@ -310,7 +314,7 @@ export default class App extends Component {
 
   // hueと通信してstateを更新
   getHueState() {
-    const url = 'http://' + hueBridgeIp + '/api/' + hueUserName;
+    const url = 'http://' + this.state.hueBridgeIp + '/api/' + this.state.hueUserName;
     $.get(url, false, (e) => {
       this.setState({
         huePower: e.lights[HUE.ID].state.on
@@ -319,7 +323,7 @@ export default class App extends Component {
   }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
-    const url = 'http://' + hueBridgeIp + '/api/' + hueUserName + '/lights/' + HUE.ID + '/state'; 
+    const url = 'http://' + this.state.hueBridgeIp + '/api/' + hueUserName + '/lights/' + HUE.ID + '/state'; 
     $.ajax({
       'url': url,
       'data': dataJson,
