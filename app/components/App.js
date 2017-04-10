@@ -84,6 +84,8 @@ export default class App extends Component {
   filter(e) {
     const inputVal = e.target.value;
     let results = [];
+    let inputColor = '';
+
     if (inputVal.length !== 0) {
       results = this.state.allFiles.filter((file) => {
         // すべて小文字にしてから包含を判定
@@ -98,11 +100,11 @@ export default class App extends Component {
       // カラーコード追加
       if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
 )) {
-        this.state.inputColor = inputVal;
+        inputColor = inputVal;
 
         results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
       }else{
-        this.state.inputColor = '#ffffff';
+        inputColor = '#ffffff';
       }
 
       // web検索追加
@@ -120,6 +122,7 @@ export default class App extends Component {
   
     this.setState({ 
       results,
+      inputColor,
       input: inputVal,
       selectedIndex: 0
     }); 
