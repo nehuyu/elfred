@@ -94,9 +94,12 @@ export default class App extends Component {
       
       if (this.state.hueConnected) {
         // hue commandを追加
-        results.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
+        if ('light -on/off'.indexOf(inputVal.toLowerCase()) !== -1) {
+      	  console.log()  
+          results.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
+        }
       }
-
+      
       // カラーコード追加
       if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
 )) {
