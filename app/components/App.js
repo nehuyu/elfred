@@ -10,6 +10,7 @@ const iconutil = require('iconutil');
 
 const tinycolor = require('tinycolor2');
 
+import request from 'superagent';
 export default class App extends Component {
   
   constructor(props) {
@@ -80,12 +81,18 @@ export default class App extends Component {
       results = this.state.allFiles.filter((file) => {
         // すべて小文字にしてから包含を判定
         return (file.name.toLowerCase().indexOf(inputVal.toLowerCase()) !== -1);
-      }).slice(0, LIST.APP_MAX_LENGTH);
+      });
       
+      if (this.state.hueConnected) {
+        // hue commandを追加
+        results.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
+      }
+
       // カラーコード追加
       if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
 )) {
         this.state.inputColor = inputVal;
+
         results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
       }else{
         this.state.inputColor = '#ffffff';
