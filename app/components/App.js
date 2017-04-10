@@ -26,7 +26,8 @@ export default class App extends Component {
       input: '',
       inputColor: '#ffffff',
       selectedIndex: 0,
-      huePower: false
+      huePower: false,
+      hueConnected: false
     };
   }
   
