@@ -74,6 +74,13 @@ app.on('ready', () => {
   tray = new Tray(iconPath);
   let contextMenu = Menu.buildFromTemplate([
     {
+      label: 'Connect Hue...',
+      accelerater: 'Command+H',
+      click: () => { 
+        mainWindow.webContents.send('connectHue');  
+      }
+    },
+    {
       label: 'Quit',
       accelerater: 'Command+Q',
       selector: 'terminate:'
@@ -83,7 +90,7 @@ app.on('ready', () => {
   tray.setContextMenu(contextMenu);
 
    // if (process.env.NODE_ENV === 'development') {
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
   // } 
 
   // アプリケーションを quit する

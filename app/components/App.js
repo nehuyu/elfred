@@ -2,26 +2,28 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import fs from 'fs';
 import ReactDOM, { render } from 'react-dom';
-import styles from './App.css';
-import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
-
-const iconutil = require('iconutil');
+import iconutil from 'iconutil';
+import tinycolor from 'tinycolor2';
+import request from 'superagent';
+import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
+import styles from './App.css';
 
 export default class App extends Component {
   
   constructor(props) {
     super(props);
 
-    //hueの初期状態を取得
-    this.getHueState();
-    
     this.state = {
       allFiles: [],
       results: [],
       input: '',
+      inputColor: '#ffffff',
       selectedIndex: 0,
-      huePower: false
+      huePower: false,
+      hueConnected: false,
+      hueBridgeIp: '',
+      hueUserName: ''
     };
   }
   
@@ -36,11 +38,14 @@ export default class App extends Component {
 
   render() {
     let jsxs = this.getResultsJsxs();
+    const inputStyle = {
+      backgroundColor: this.state.inputColor
+    };
     return (
       <div className="page">
         <input type="text" id="input" className={styles.searchInput} ref="input" value={this.state.input} onKeyDown={(e) => { this.onKeyDown(e); }} onChange={(e) => { this.filter(e); }} />
-        <div className={styles.top_icon}>
-          <img src="../icon.png" className={styles.top_img} alt=""/>
+        <div className={styles.top_icon} style={inputStyle}>
+          <img src="../icon.png" className={styles.top_img} alt="" />
         </div>
         { jsxs }
       </div>
@@ -65,19 +70,48 @@ export default class App extends Component {
       const input = ReactDOM.findDOMNode(this.refs.input);
       input && input.focus();
     });
+
+    ipcRenderer.on('connectHue', () => {
+      this.connectHue();
+    });
   }
 
   filter(e) {
     const inputVal = e.target.value;
     let results = [];
+    let inputColor = '';
+
     if (inputVal.length !== 0) {
       results = this.state.allFiles.filter((file) => {
         // すべて小文字にしてから包含を判定
         return (file.name.toLowerCase().indexOf(inputVal.toLowerCase()) !== -1);
-      }).slice(0, LIST.APP_MAX_LENGTH);
+      });
+      
+      if (this.state.hueConnected) {
+        // hue commandを追加
+        if ('light -on/off'.indexOf(inputVal.toLowerCase()) !== -1) {
+          results.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
+        }
+      }
+      
+      // カラーコード追加
+      if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
+)) {
+        inputColor = inputVal;
+        
+        if (this.state.hueConnected) {
+          results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
+        }
+      } else {
+        inputColor = '#ffffff';
+      }
 
       // web検索追加
       results.push({ name: 'www search...', icon: '../icon_search.png', type: 'search' });
+      
+      // resultsの数を調整
+      results = results.slice(0, LIST.APP_MAX_LENGTH);
+    
     } else {
       results = [];
     }
@@ -87,6 +121,7 @@ export default class App extends Component {
   
     this.setState({ 
       results,
+      inputColor,
       input: inputVal,
       selectedIndex: 0
     }); 
@@ -130,7 +165,7 @@ export default class App extends Component {
   }
   
   launch(item) {
-    switch(item.type){ 
+    switch(item.type) { 
       case 'app':
         shell.openItem(item.filePath);
         break;
@@ -166,9 +201,6 @@ export default class App extends Component {
     }).map((appName) => {
       return { name: appName.slice(0, -4), filePath: appDir + appName, icon: '../icon_default.png', type: 'app' };
     });
-
-    // hue commandを追加
-    appList.push({ name: 'hue -on/off', icon: '../icon_default.png', type: 'hue' });
     return appList;   
   }
 
@@ -231,20 +263,60 @@ export default class App extends Component {
   hueControl(item) {
     switch(item.name) {
       // on/off切り替え
-      case 'hue -on/off':
+      case 'light -on/off':
         this.sendHue({ on: !this.state.huePower });
         this.setState({
           huePower: !this.state.huePower
         });
+        break;
+      case 'light - change color':
+        const hsv = tinycolor(this.state.input).toHsv();
+        this.sendHue({ hue: Math.floor(hsv.h * 182), sat: Math.floor(hsv.s * 254), bri: Math.floor(hsv.v * 254) });
         break;
       default:
         break;
     }
   }
   
+
+  connectHue() {
+    request
+    .get(HUE.MEET_URL)
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+
+      this.setState({
+				hueBridgeIp: res.body[0].internalipaddress
+			});
+      
+      const hueApiUrl = 'http://' + this.state.hueBridgeIp + '/api';
+      alert('hue bridgeのlink buttonを押して下さい');
+      request
+      .post(hueApiUrl)
+      .set('Accept', 'application/json')
+      .send(JSON.stringify({ 'devicetype': 'my_hue_app#nehuyunehuyu' }))
+      .end((err, res) => {
+        // 接続に成功したら
+        if (res) {  
+					this.setState({
+						hueUserName: res.body[0].success.username
+					});
+          alert('接続されました');
+          this.getHueState();
+          this.setState({
+            hueConnected: true
+          });
+        } else {
+          alert('接続に失敗しました');
+        }
+      });
+    });    
+    // hueの初期状態を取得
+    }
+
   // hueと通信してstateを更新
   getHueState() {
-    const url = 'http://' + HUE.IP + '/api/' + HUE.USER;
+    const url = 'http://' + this.state.hueBridgeIp + '/api/' + this.state.hueUserName;
     $.get(url, false, (e) => {
       this.setState({
         huePower: e.lights[HUE.ID].state.on
@@ -253,7 +325,7 @@ export default class App extends Component {
   }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
-    const url = 'http://' + HUE.IP + '/api/' + HUE.USER + '/lights/' + HUE.ID + '/state'; 
+    const url = 'http://' + this.state.hueBridgeIp + '/api/' + this.state.hueUserName + '/lights/' + HUE.ID + '/state'; 
     $.ajax({
       'url': url,
       'data': dataJson,
