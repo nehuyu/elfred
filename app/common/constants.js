@@ -10,9 +10,8 @@ const Constants = {
   },
   SEARCH_URL: 'https://www.google.co.jp/search?q=',
   HUE: {
-    IP: '192.168.10.134',
-    USER: 'LMGKsGB3DEoBlL4cLN3hVoYt0otICK83jQmBT5Vq',
-    ID: '5'
+    ID: '5',
+    MEET_URL: 'https://www.meethue.com/api/nupnp'
   }
 };
 
