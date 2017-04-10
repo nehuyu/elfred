@@ -74,7 +74,13 @@ app.on('ready', () => {
   tray = new Tray(iconPath);
   let contextMenu = Menu.buildFromTemplate([
     {
+      label: 'Connect Hue...',
       accelerater: 'Command+H',
+      click: () => { 
+        mainWindow.webContents.send('connectHue');  
+      }
+    },
+    {
       label: 'Quit',
       accelerater: 'Command+Q',
       selector: 'terminate:'
