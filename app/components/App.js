@@ -10,6 +10,10 @@ const iconutil = require('iconutil');
 
 const tinycolor = require('tinycolor2');
 
+
+let hueBridgeIp = '';
+let hueUserName = '';
+
 import request from 'superagent';
 export default class App extends Component {
   
