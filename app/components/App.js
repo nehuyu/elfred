@@ -272,6 +272,38 @@ export default class App extends Component {
     }
   }
   
+
+  connectHue() {
+    request
+    .get(HUE.MEET_URL)
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+
+      hueBridgeIp = res.body[0].internalipaddress;
+      
+      const hueApiUrl = 'http://' + hueBridgeIp + '/api';
+      alert('hue bridgeのlink buttonを押して下さい');
+      request
+      .post(hueApiUrl)
+      .set('Accept', 'application/json')
+      .send(JSON.stringify({ 'devicetype': 'my_hue_app#nehuyunehuyu' }))
+      .end((err, res) => {
+        // 接続に成功したら
+        if (res) {  
+          hueUserName = res.body[0].success.username;
+          alert('接続されました');
+          this.getHueState();
+          this.setState({
+            hueConnected: true
+          });
+        } else {
+          alert('接続に失敗しました');
+        }
+      });
+    });    
+    // hueの初期状態を取得
+      }
+
   // hueと通信してstateを更新
   getHueState() {
     const url = 'http://' + HUE.IP + '/api/' + HUE.USER;
