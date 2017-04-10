@@ -326,7 +326,7 @@ export default class App extends Component {
   }
   sendHue(data) {
     const dataJson = JSON.stringify(data);
-    const url = 'http://' + this.state.hueBridgeIp + '/api/' + hueUserName + '/lights/' + HUE.ID + '/state'; 
+    const url = 'http://' + this.state.hueBridgeIp + '/api/' + this.state.hueUserName + '/lights/' + HUE.ID + '/state'; 
     $.ajax({
       'url': url,
       'data': dataJson,
