@@ -95,7 +95,6 @@ export default class App extends Component {
       if (this.state.hueConnected) {
         // hue commandを追加
         if ('light -on/off'.indexOf(inputVal.toLowerCase()) !== -1) {
-      	  console.log()  
           results.push({ name: 'light -on/off', icon: '../icon_default.png', type: 'hue' });
         }
       }
@@ -104,16 +103,18 @@ export default class App extends Component {
       if (inputVal.match(/^#([\da-fA-F]{6}|[\da-fA-F]{3})$/
 )) {
         inputColor = inputVal;
-
-        results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
-      }else{
+        
+        if (this.state.hueConnected) {
+          results.push({ name: 'light - change color', icon: '../icon_default.png', type: 'hue' });
+        }
+      } else {
         inputColor = '#ffffff';
       }
 
       // web検索追加
       results.push({ name: 'www search...', icon: '../icon_search.png', type: 'search' });
       
-      //resultsの数を調整
+      // resultsの数を調整
       results = results.slice(0, LIST.APP_MAX_LENGTH);
     
     } else {
@@ -316,7 +317,7 @@ export default class App extends Component {
       });
     });    
     // hueの初期状態を取得
-      }
+    }
 
   // hueと通信してstateを更新
   getHueState() {
