@@ -74,6 +74,7 @@ app.on('ready', () => {
   tray = new Tray(iconPath);
   let contextMenu = Menu.buildFromTemplate([
     {
+      accelerater: 'Command+H',
       label: 'Quit',
       accelerater: 'Command+Q',
       selector: 'terminate:'
