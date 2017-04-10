@@ -254,7 +254,6 @@ export default class App extends Component {
         break;
       case 'light - change color':
         const hsv = tinycolor(this.state.input).toHsv();
-        this.sendHue({ hue: hsv.h * 182, sat: hsv.s * 254, bri: hsv.v * 254 });
         this.sendHue({ hue: Math.floor(hsv.h * 182), sat: Math.floor(hsv.s * 254), bri: Math.floor(hsv.v * 254) });
         break;
       default:
