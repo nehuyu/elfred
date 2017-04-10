@@ -20,9 +20,6 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    // hueの初期状態を取得
-    this.getHueState();
-    
     this.state = {
       allFiles: [],
       results: [],
