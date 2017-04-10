@@ -15,7 +15,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    //hueの初期状態を取得
+    // hueの初期状態を取得
     this.getHueState();
     
     this.state = {
@@ -145,7 +145,7 @@ export default class App extends Component {
   }
   
   launch(item) {
-    switch(item.type){ 
+    switch(item.type) { 
       case 'app':
         shell.openItem(item.filePath);
         break;
