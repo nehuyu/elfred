@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import fs from 'fs';
 import ReactDOM, { render } from 'react-dom';
-import styles from './App.css';
-import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
 import { shell, ipcRenderer } from 'electron';
-
-const iconutil = require('iconutil');
-
-const tinycolor = require('tinycolor2');
-
-
-
+import iconutil from 'iconutil';
+import tinycolor from 'tinycolor2';
 import request from 'superagent';
+import { C, LIST, SEARCH_URL, HUE } from '../common/constants';
+import styles from './App.css';
 
 export default class App extends Component {
   
